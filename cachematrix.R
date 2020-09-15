@@ -1,31 +1,26 @@
-setwd('C:/Users/rubind1/Documents/Coursera-R')
-##
-## I simply set the input x as a matrix
-## and then set the solved value "s" as a null
-## then I changed every reference to "mean" to "solve"
-makeCacheMatrix <- function(x = matrix(sample(1:100,9),3,3)) {
-  s <- NULL
+makeCacheMatrix <- function(x = matrix()) {
+    i <- NULL
   set <- function(y) {
-    x <<- y
-    s <<- NULL
+          x <<- y
+          i <<- NULL
   }
   get <- function() x
-  setsolve <- function(solve) s <<- solve
-  getsolve <- function() s
-  list(set = set, get = get,
-       setsolve = setsolve,
-       getsolve = getsolve)
+  setinverse <- function(inverse) i <<- inverse
+  getinverse <- function() i
+  list(set = set,
+       get = get,
+       setinverse = setinverse,
+       getinverse = getinverse)
 }
-##
-## Same here, changed "mean" to "solve" and "m" to "s"
+
 cacheSolve <- function(x, ...) {
-  s <- x$getsolve()
-  if(!is.null(s)) {
-    message("getting inversed matrix")
-    return(s)
+  i <- x$getinverse()
+  if (!is.null(i)) {
+          message("getting cached data")
+          return(i)
   }
   data <- x$get()
-  s <- solve(data, ...)
-  x$setsolve(s)
-  s
+  i <- solve(data, ...)
+  x$setinverse(i)
+  i
 }
